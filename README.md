@@ -30,3 +30,21 @@ Rinkeby URL at Etherscan.io: https://rinkeby.etherscan.io/address/0x1736951c8a9f
 # OpenZeppelin Version
 
 2.1.2
+
+# Observations for reviewers
+
+Two findings were identified after the first submission. 
+
+1) Test were failing. 
+
+TestStartNotary was updated
+
+2) Use 'transferFrom' instead of '_transferFrom'
+
+This observation is actually innaccurate. 
+
+The project's template available in Github requires to use '_transferFrom' instead of 'transferFrom'.
+
+ 
+
+
