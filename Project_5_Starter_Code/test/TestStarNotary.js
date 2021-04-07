@@ -157,7 +157,8 @@ it('lets 2 users exchange stars', async() => {
     let user1 = accounts[1];
     //let user2 = accounts[2];
     let instance = await StarNotary.deployed();
-     
+    let sender = (await instance.getSender.call());
+
     //Star 1
     let starId1 = Math.floor(Math.random() * 1000);
     let starName1 = "Test Star " + starId1;
@@ -185,16 +186,21 @@ it('lets 2 users exchange stars', async() => {
     let owner1 = await instance.ownerOf.call(starId1);
     let owner2 = await instance.ownerOf.call(starId2);
 
+    console.log("Sender: " + sender);
+    console.log("------------------------");
     console.log("Star 1: " + star1.name + " Symbol 1: " + star1.symbol + " owner 1: " + owner1);
     console.log("Star 2: " + star2.name + " Symbol 2: " + star2.symbol + " owner 2: " + owner2);
     console.log("------------------------");
 
     // 2. Call the exchangeStars functions implemented in the Smart Contract
-    await instance.exchangeStars.call(starId1, starId2);
+    await instance.exchangeStars(starId1, starId2);
 
     // 3. Verify that the owners changed
     let owner1AfterExchange = await instance.ownerOf.call(starId1);
     let owner2AfterExchange = await instance.ownerOf.call(starId2);
+
+    console.log("Star 1: " + star1.name + " New Owner 1: " + owner1AfterExchange);
+    console.log("Star 2: " + star2.name + " New Owner 2: " + owner2AfterExchange);
 
     assert.equal(owner1, owner2AfterExchange);
     assert.equal(owner2, owner1AfterExchange);
